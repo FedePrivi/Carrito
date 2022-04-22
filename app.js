@@ -33,6 +33,7 @@ const pintarCarrito = (/*producto*/) => { /*funcion para agregar los productos e
 
     Object.values(carritoObjeto).forEach(item => { /*object.values devuelve un array con los valores de carritoObjeto y con el forEach lo recorremos y el parametro item hace referencia */
             //console.log(item);
+            console.log(carritoObjeto);
          const clone = template.content.firstElementChild.cloneNode(true); /*clonamos el template*/
          clone.querySelector('.producto-agregado').textContent = item.titulo;
          clone.querySelector('.cantidad').textContent = item.cantidad; /*viene de prodcuto del dataset que es el data-fruta" ..." del html*/
