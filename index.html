@@ -11,15 +11,15 @@
     <main id="container-productos">
         <div class="producto frutilla">
             <h1>Frutilla 🍓</h1>            
-            <button class="boton">Agregar</button>
+            <button class="boton" data-fruta="frutilla">Agregar</button>
         </div>
         <div class="producto manzana">
             <h1>Manzana 🍎</h1>
-            <button class="boton">Agregar</button>
+            <button class="boton" data-fruta="manzana">Agregar</button>
         </div>
         <div class="producto pera">
             <h1>Pera 🍐</h1>
-            <button class="boton">Agregar</button>
+            <button class="boton" data-fruta="pera">Agregar</button>
         </div>    
     </main>
     
@@ -30,7 +30,7 @@
 
 </section>
 
-    <template id="container-template">
+    <template id="template">
         <div id="container-lista">
             <ul class="lista">
                 <span class="producto-agregado">Frutilla</span>
@@ -39,5 +39,7 @@
             </ul>  
       </div>
     </template>
+
+    <script src="app.js"></script>
 </body>
 </html>
