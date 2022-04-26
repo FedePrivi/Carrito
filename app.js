@@ -3,45 +3,55 @@ const template = document.getElementById('template');
 const fragment = document.createDocumentFragment();
 const btns = document.querySelectorAll('.producto .boton')
 
-const carritoObjeto = {} /*aca se almacenan los productos que ageguemos*/
+const carritoArray = [];
 
-const agregarAlCarrito = (e) => { /*funcion para agregar al carrito los objetos*/
-    // console.log(e.target.dataset.fruta);
+const agregarAlCarrito = (e) => { 
+    console.log(e.target.dataset.fruta);
+
     const producto = {
         titulo:e.target.dataset.fruta,
         id:e.target.dataset.fruta,
-        cantidad: 1 /*cantidad de productos q aparecen al agregar masd e un producto*/ 
+        cantidad: 1  
     }
 
-    if (carritoObjeto.hasOwnProperty(producto.titulo)) {
-        producto.cantidad = carritoObjeto[producto.titulo].cantidad + 1  
-    }
+    const indice = carritoArray.findIndex( (item) => item.id === producto.id );
 
-     /*empujamos el producto q agreguemos desde el evento al objeto carritoObjeto*/
+     //nos devuelve el indice si es q el item.id (que es el id de cada item del array donde se almacenan los productos) es igual producto.id (que es el producto que se crea pero aun no es almacenado en el array) en resumen para saber si el producto ya fue agregado al array      console.log(indice)
 
-    // console.log(carritoObjeto);
-    carritoObjeto[producto.titulo] = producto;
+    console.log(indice);
+
+    //si no existe empujamos el nuevo elemento
+if (indice === -1) {
+    carritoArray.push(producto);
+}else {
+    carritoArray[indice].cantidad++    
+}
+
+// console.log( carritoArray);
+
+
     pintarCarrito(/*producto*/)
     
 }
-                    /*el parametro producto no es necesario solo era para mostrarloe n consola*/
-const pintarCarrito = (/*producto*/) => { /*funcion para agregar los productos en el template*/ 
+
+
+btns.forEach(boton => {  
+    boton.addEventListener("click", agregarAlCarrito) 
+});
+
+const pintarCarrito = () => {  
     // console.log("pintar carrito", producto);
+    carrito.textContent = ''; 
 
-    carrito.textContent = ''; /*para que no se agregun linea por cada elemento que demos click*/
-
-
-    Object.values(carritoObjeto).forEach(item => { /*object.values devuelve un array con los valores de carritoObjeto y con el forEach lo recorremos y el parametro item hace referencia */
+    carritoArray.forEach(item => { /*object.values devuelve un array con los valores de carritoArray y con el forEach lo recorremos y el parametro item hace referencia */
             //console.log(item);
+           //console.log(carritoArray);
          const clone = template.content.firstElementChild.cloneNode(true); /*clonamos el template*/
          clone.querySelector('.producto-agregado').textContent = item.titulo;
-         clone.querySelector('.cantidad').textContent = item.cantidad; /*viene de prodcuto del dataset que es el data-fruta" ..." del html*/
+         clone.querySelector('.cantidad').textContent = item.cantidad;        fragment.appendChild(clone); 
          
-         fragment.appendChild(clone); /*para evitar el reflow*/
-    })
+          })
 
     carrito.appendChild(fragment);
 }
-btns.forEach(boton => {  /*para recorrer los botones*/
-    boton.addEventListener("click", agregarAlCarrito) /*a cada boton le agrego una escucha de evento*/
-});
+
