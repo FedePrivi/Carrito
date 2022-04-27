@@ -34,9 +34,10 @@ if (indice === -1) {
     
 }
 
-
+console.log(btns);
 btns.forEach(boton => {  
     boton.addEventListener("click", agregarAlCarrito) 
+    
 });
 
 const pintarCarrito = () => {  
