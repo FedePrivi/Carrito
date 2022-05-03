@@ -10,32 +10,75 @@
 <body>
     <main id="container-productos">
         <div class="producto frutilla">
-            <h1>Frutilla 🍓</h1>            
-            <button class="boton" data-fruta="frutilla">Agregar</button>
+            <h1>Frutilla 🍓</h1>
+            <p class="precio">$200</p>            
+            <button class="boton" data-fruta="Frutilla" data-precio="200">Agregar</button>
         </div>
         <div class="producto manzana">
             <h1>Manzana 🍎</h1>
-            <button class="boton" data-fruta="manzana">Agregar</button>
+            <p class="precio">$100</p>
+            <button class="boton" data-fruta="Manzana" data-precio="100">Agregar</button>
         </div>
         <div class="producto pera">
             <h1>Pera 🍐</h1>
-            <button class="boton" data-fruta="pera">Agregar</button>
+            <p class="precio">$300</p>
+            <button class="boton" data-precio="300" data-fruta="Pera" >Agregar</button>
         </div>    
     </main>
     
 
-<section id="container-carrito"></section>
-
-
+<section id="container-carrito">
     <template id="template">
-        <div id="container-lista">
-            <ul class="lista">
-                <span class="producto-agregado">Frutilla</span>
+        <ul id="carrito"> 
+            <div id="container-lista">
+             <ul class="lista">
                 <span class="cantidad"> 12 </span>
-  
-            </ul>  
-      </div>
-    </template>
+                <span class="producto-agregado">Frutilla</span>
+                 
+               <div id="container-sumar-restar"> 
+                    <button class="boton-mas">Mas</button>
+                    <button class="boton-menos">Menos</button>
+                </div>
+            </ul>
+            </div>
+            <div id="container-total-producto">
+                <p class="precio-producto">Total $<span>300</span></p>
+            </div>
+        </ul>  
+        </template> 
+
+        
+</section>
+<footer id="footer">
+
+<template class="template-footer">
+    
+    
+       <div id="container-footer">
+        <div id="container-precio-total">
+            <p class="total"> Total $<span class="precio-total">1500</span></p>
+            <button class="terminar-compra" data-finalizar="eliminar">Finalizar compra</button>
+        </div>
+       </div>
+    
+    
+</template>
+
+</footer>
+
+
+
+<dialog id="container-modal">
+    <div><h1>Confirmar compra</h1></div>
+    <div class="container-precio">
+        <h3 class="titulo-precio">Precio total:</h3>
+        <span class="precio-final-total">15000</span>
+    </div>
+    <div class="container-modal-flex-botones">
+        <button class="confirmar">Confirmar</button>
+        <button class="cancelar">Cancelar</button>
+    </div>
+</dialog>
 
     <script src="app.js"></script>
 </body>

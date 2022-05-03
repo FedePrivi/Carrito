@@ -3,19 +3,25 @@ body{
     color: antiquewhite;
 }
 
+
+
 #container-productos{
     display: flex;
     justify-content: space-evenly;
+    
 }
 
 .producto {
     position: relative;
     width: 180px;
-    height: 150px;
+    height: 180px;
     /* background: lightslategray; */
     text-align: center;
     border: 1px solid lightslategrey;
     box-shadow: 0px 0px 4px lightslategray;
+}
+p.precio {
+    font-size: 20px;
 }
 
 .boton{
@@ -43,10 +49,12 @@ body{
     list-style-type:none;
     display: flex;
     /* background-color: red; */
-    justify-content: space-between;    
+    /* justify-content: space-between;     */
     height: 40px;
     font-size: 25px;
-    border: 2px solid black;    
+    border: 2px solid lightslategrey;    
+    margin-top: 4px;
+    padding-left: 15px;
 }
 .producto-agregado{
     display: flex;
@@ -66,6 +74,189 @@ body{
     align-items: center;
     border-radius: 50%;
 }
+#container-total-producto{
+    display: flex;
+    position: relative;
+    background-color:grey;
+    font-size: 25px;
+    color: white;
+    width: 160px;
+    height: 50px;
+    margin-left: 15px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px 0px 15px 15px;
+}
+
+#container-footer{
+    display: flex;
+    justify-content: center;
+    height: 150px;
+}
+#container-precio-total{
+    position: relative;
+    display: flex;
+    border: solid 1.5px white;
+    width: 350px;
+    /* float: right; */
+    justify-content: end;
+}
+
+.terminar-compra{
+    border-style: none;
+    border-radius: 5px 5px 0 0;
+    margin-right: 10px;
+    height: 40px;
+    align-self: flex-end;
+    float: right;
+    font-size: 15px;
+}
+
+.terminar-compra:hover{
+    cursor: pointer;   
+    height: 50px;
+    background: lightgrey;
+    font-size: 15px;
+    /* width: 125px; */
+    /* color: red; */
+    box-shadow: 0px -2px 10px red;
+    transition: 0.5s;
+}
+
+
+
+.total{
+    width: 150px;
+    height: 40px;
+    font-size: 30px;
+    border: 2px solid red;
+    margin-right: 40px;
+    margin-left: 5px;
+    text-align: center;
+    padding-top: 2px;
+}
+
+#container-sumar-restar{
+    /* background-color: antiquewhite; */
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+    
+}
+
+.boton-mas{
+    border: solid 1px lightgray;
+    height: 30px;
+    width: 60px;
+    margin-right: 30px;
+    background-color: lightgreen;
+    font-size: 18px;
+    border-radius: 5px 5px 5px 5px;
+
+}
+
+.boton-menos{
+    border: solid 1px lightgray;
+    height: 30px;
+    width: 60px;
+    margin-right: 30px;
+    background-color: lightcoral;
+    font-size: 18px;
+    padding-left: 1px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+
+
+.boton-menos:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 3px white;
+}
+
+.boton-mas:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 3px white;
+}
+#container-modal{
+    position: relative;
+    height: 250px;   
+    background-color: rgb(231, 209, 209); 
+}
+#container-modal::backdrop{
+    background-color: rgba(0, 0, 0, .55);
+
+}
+.container-modal-flex-botones{
+    position: relative;
+    display: flex;    
+    top: 85px;
+    height: 30px;
+    /* background-color: burlywood; */
+    /* align-items: flex-end; */
+    justify-content: end;
+    
+}
+
+.confirmar{
+    border-style: none;
+    margin-right: 8px;
+    background-color: rgba(18, 85, 97, 0.384);
+    font-size: 14px;
+    border: 1px solid black;
+    width: 100px;
+}
+.confirmar:hover{
+    cursor: pointer;
+    background-color: rgba(18, 85, 97, 0.877);
+    transition: 0.5s;
+}
+
+.cancelar{
+    border-style: none;
+    background-color: rgba(124, 21, 21, 0.384);
+    font-size: 14px;
+    border: 1px solid black;
+    width: 100px;
+}
+
+.cancelar:hover{
+    cursor: pointer;
+    background-color: rgba(124, 21, 21, 0.877);
+    transition: 0.5s;
+}
+.container-precio{
+    position: relative;
+    display: flex;
+    height: 60PX;
+    /* background: red; */
+    justify-content: space-between;
+
+}
+
+.titulo-precio{
+    position: relative;
+    /* background-color: blueviolet;     */
+    height: 120px;
+    font-size: 25px;
+    bottom: 25px;
+    margin-left: 15px;
+}
+.precio-final-total{
+    /* margin-left: 50px; */
+    position: relative;
+    display: flex;
+    width: 120px;
+    height: 100px;
+    /* background-color: green; */
+    align-items: flex-end;
+    padding-bottom: 12px;
+    padding-left: 15px;
+    box-sizing: border-box;
+    font-size: 30px;
+    border-bottom: 1px solid black;
+}
+
 
 @media (max-width:707px) {
     #container-productos{
@@ -85,4 +276,6 @@ body{
     .lista{
         width: 500px;
     }
-})
+}
+
+

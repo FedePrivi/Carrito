@@ -1,48 +1,180 @@
 const carrito = document.getElementById('container-carrito');
+const footer = document.getElementById('footer');
+const templateFooter = document.querySelector('.template-footer')
 const template = document.getElementById('template');
 const fragment = document.createDocumentFragment();
-const btns = document.querySelectorAll('.producto .boton')
 
-const carritoObjeto = {} /*aca se almacenan los productos que ageguemos*/
+const modal = document.getElementById('container-modal');
+const btnFinalizarCompra = document.querySelector(".terminar-compra");
 
-const agregarAlCarrito = (e) => { /*funcion para agregar al carrito los objetos*/
-    // console.log(e.target.dataset.fruta);
+const precioFinalModal = document.querySelector('.precio-final-total')
+
+let carritoArray = []; //lo cambiamos por un let porq lo vamos a sobrescribir utilizando map en las funciones de aumentar y disminuir carrito
+
+
+document.addEventListener("click", (e) => {
+    //console.log(e.target.matches(".producto .boton"));
+    // console.log(e.target.dataset.precio);
+    
+    if (e.target.matches(".producto .boton")) {
+        agregarAlCarrito(e) 
+    }
+
+    // console.log(e.target.matches('.boton-mas'));
+    if (e.target.matches('.boton-mas')) {
+        btnAumentar(e)
+    }
+
+    if (e.target.matches('.boton-menos')) {
+        btnDisminuir(e)
+    }
+    if (e.target.matches(".terminar-compra")){
+        abrirModal();
+    }
+    if (e.target.matches('.cancelar')){
+        cerrarModal();
+    }
+    if (e.target.matches('.confirmar')) {
+        confirmarModal()
+    }
+})
+
+
+
+
+
+
+
+const agregarAlCarrito = (e) => { 
+    
+    // console.log(e.target.dataset.precio);
     const producto = {
         titulo:e.target.dataset.fruta,
         id:e.target.dataset.fruta,
-        cantidad: 1 /*cantidad de productos q aparecen al agregar masd e un producto*/ 
-    }
+        cantidad: 1,
+        precio:parseInt(e.target.dataset.precio)
+    };
+    // console.log(producto);
 
-    if (carritoObjeto.hasOwnProperty(producto.titulo)) {
-        producto.cantidad = carritoObjeto[producto.titulo].cantidad + 1  
-    }
+    const indice = carritoArray.findIndex( (item) => item.id === producto.id );
 
-     /*empujamos el producto q agreguemos desde el evento al objeto carritoObjeto*/
+     //nos devuelve el indice si es q el item.id (que es el id de cada item del array donde se almacenan los productos) es igual producto.id (que es el producto que se crea pero aun no es almacenado en el array) en resumen para saber si el producto ya fue agregado al array      console.log(indice)
 
-    // console.log(carritoObjeto);
-    carritoObjeto[producto.titulo] = producto;
-    pintarCarrito(/*producto*/)
+    // console.log(indice);
+    
+
+if (indice === -1) {
+    //si no existe empujamos el nuevo elemento
+    carritoArray.push(producto);
+}else {
+    //si existe el producto sumamos cantidad y aumentamos el precio segun la cantidad
+    carritoArray[indice].cantidad++;
+    //carritoArray[indice].precio = carritoArray[indice].cantidad * producto.precio;
+} 
+
+// console.log( carritoArray);
+
+
+pintarCarrito()
     
 }
-                    /*el parametro producto no es necesario solo era para mostrarloe n consola*/
-const pintarCarrito = (/*producto*/) => { /*funcion para agregar los productos en el template*/ 
+
+const pintarCarrito = () => {  
+
+
     // console.log("pintar carrito", producto);
+    carrito.textContent = ''; 
 
-    carrito.textContent = ''; /*para que no se agregun linea por cada elemento que demos click*/
-
-
-    Object.values(carritoObjeto).forEach(item => { /*object.values devuelve un array con los valores de carritoObjeto y con el forEach lo recorremos y el parametro item hace referencia */
+    carritoArray.forEach(item => { /*object.values devuelve un array con los valores de carritoArray y con el forEach lo recorremos y el parametro item hace referencia */
             //console.log(item);
-            console.log(carritoObjeto);
+           //console.log(carritoArray);
          const clone = template.content.firstElementChild.cloneNode(true); /*clonamos el template*/
          clone.querySelector('.producto-agregado').textContent = item.titulo;
-         clone.querySelector('.cantidad').textContent = item.cantidad; /*viene de prodcuto del dataset que es el data-fruta" ..." del html*/
+         clone.querySelector('.cantidad').textContent = item.cantidad;     
+         clone.querySelector('.precio-producto span').textContent = item.precio *item.cantidad;   
+         fragment.appendChild(clone); 
+         clone.querySelector('.boton-mas').dataset.id = item.id;
+         clone.querySelector('.boton-menos').dataset.id = item.id
+
+         })
+
          
-         fragment.appendChild(clone); /*para evitar el reflow*/
-    })
 
     carrito.appendChild(fragment);
+
+    pintarFooter();
 }
-btns.forEach(boton => {  /*para recorrer los botones*/
-    boton.addEventListener("click", agregarAlCarrito) /*a cada boton le agrego una escucha de evento*/
-});
+
+const pintarFooter = () => {
+    //console.log("pintar footer");
+    footer.textContent = "";
+
+    const total = carritoArray.reduce(
+        (acc, current) => acc + current.cantidad * current.precio, 0
+    )
+    //console.log(total);
+
+
+    const clone = templateFooter.content.firstElementChild.cloneNode(true);
+    clone.querySelector('.precio-total').textContent = total;
+    
+    footer.appendChild(clone);
+
+
+    precioFinal(total)
+};
+
+
+const btnAumentar = (e) =>{
+    // console.log("se dio click", e.target.dataset.id );
+carritoArray = carritoArray.map(item => {
+        if (item.id === e.target.dataset.id) {
+            item.cantidad++
+        }
+        return item;
+    });
+    pintarCarrito();
+
+}
+
+const btnDisminuir  = (e) =>{
+    // console.log("se dio click", e.target.dataset.id );
+carritoArray = carritoArray.filter(item => {
+        if (item.id === e.target.dataset.id) {
+            if (item.cantidad > 0) {
+                item.cantidad--
+                if (item.cantidad === 0) {
+                    return 
+                }
+                return item
+            }
+        } else {return item}
+    });
+    pintarCarrito();
+
+    if (carritoArray.length === 0){ 
+        footer.textContent = "";
+    }//si no existe ningun producto en el array que el footer sea vacio porq sino queda el cartel de precio total con finalizar compra sin ningun producto agregado.
+}
+
+const abrirModal = () => {
+   modal.showModal();
+}
+
+const cerrarModal = () => {
+    modal.close();
+
+}
+
+const confirmarModal = () => {
+    location.reload()
+}
+
+
+const precioFinal = (tot) => {
+    precioFinalModal.textContent = `$ ${tot}`;
+    // console.log(tot);
+}
+
+
+
